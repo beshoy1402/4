@@ -7,126 +7,81 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🫱</text></svg>">
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --accent:#FF6B35;--dark:#0a0a0a;--dark2:#111;--dark3:#1a1a1a;--dark4:#222;
   --text:#f0f0f0;--text2:#aaa;--text3:#555;--border:rgba(255,255,255,0.08);
-  --success:#22c55e;--danger:#ef4444;
+  --border2:rgba(255,255,255,0.13);--success:#22c55e;--danger:#ef4444;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',system-ui,sans-serif;background:var(--dark);color:var(--text);min-height:100vh}
 .hidden{display:none!important}
-/* PIN Screen */
-#pin-screen{
-  position:fixed;inset:0;background:var(--dark);display:flex;align-items:center;justify-content:center;z-index:999;
-}
-.pin-card{
-  width:100%;max-width:360px;background:var(--dark2);border:1px solid var(--border);
-  border-radius:24px;padding:40px 32px;text-align:center;
-}
+
+/* PIN */
+#pin-screen{position:fixed;inset:0;background:var(--dark);display:flex;align-items:center;justify-content:center;z-index:999}
+.pin-card{width:100%;max-width:340px;background:var(--dark2);border:1px solid var(--border2);border-radius:24px;padding:36px 28px;text-align:center}
 .pin-card h2{font-size:22px;font-weight:800;margin-bottom:4px}
 .pin-card h2 span{color:var(--accent)}
-.pin-card p{font-size:13px;color:var(--text3);margin-bottom:24px}
-.pin-display{
-  font-size:32px;letter-spacing:12px;font-weight:800;
-  padding:14px;background:var(--dark3);border-radius:12px;margin-bottom:20px;
-  min-height:58px;color:var(--accent);
-}
-.pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
-.pin-btn{
-  padding:18px;border-radius:12px;background:var(--dark3);border:1px solid var(--border);
-  color:var(--text);font-size:22px;font-weight:700;cursor:pointer;transition:all .15s;
-}
-.pin-btn:hover{background:var(--dark4);border-color:rgba(255,255,255,.15)}
+.pin-card p{font-size:13px;color:var(--text3);margin-bottom:22px}
+.pin-display{font-size:32px;letter-spacing:12px;font-weight:800;padding:14px;background:var(--dark3);border-radius:12px;margin-bottom:18px;min-height:56px;color:var(--accent)}
+.pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px}
+.pin-btn{padding:18px;border-radius:12px;background:var(--dark3);border:1px solid var(--border);color:var(--text);font-size:22px;font-weight:700;cursor:pointer;transition:all .15s}
+.pin-btn:hover{background:var(--dark4);border-color:var(--border2)}
 .pin-btn:active{transform:scale(.95)}
 .pin-err{color:var(--danger);font-size:13px;margin-top:8px;display:none}
+
 /* Header */
-#waiter-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 20px;background:var(--dark2);border-bottom:1px solid var(--border);
-  position:sticky;top:0;z-index:10;
-}
-.waiter-logo{font-size:16px;font-weight:800}
+#waiter-header{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:var(--dark2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;gap:12px}
+.waiter-logo{font-size:16px;font-weight:800;flex-shrink:0}
 .waiter-logo span{color:var(--accent)}
-.active-table-badge{
-  padding:6px 16px;border-radius:50px;background:rgba(255,107,53,.15);
-  border:1px solid rgba(255,107,53,.3);color:var(--accent);font-size:14px;font-weight:600;
-}
-/* Table selector */
+.active-table-badge{padding:5px 14px;border-radius:50px;background:rgba(255,107,53,.15);border:1px solid rgba(255,107,53,.3);color:var(--accent);font-size:13px;font-weight:600}
+
+/* Tables */
 #table-select-screen{padding:20px}
-#table-select-screen h3{font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text2)}
-.table-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:12px;margin-bottom:24px}
-.table-tile{
-  padding:20px 10px;border-radius:14px;background:var(--dark2);border:1px solid var(--border);
-  text-align:center;cursor:pointer;transition:all .2s;
-}
+#table-select-screen h3{font-size:14px;font-weight:700;margin-bottom:14px;color:var(--text2)}
+.table-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:10px;margin-bottom:24px}
+.table-tile{padding:18px 8px;border-radius:14px;background:var(--dark2);border:1px solid var(--border);text-align:center;cursor:pointer;transition:all .2s}
 .table-tile:hover{border-color:var(--accent);background:rgba(255,107,53,.06)}
-.table-tile.busy{border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.05)}
+.table-tile.busy{border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.04)}
 .table-tile-num{font-size:24px;font-weight:800;color:var(--accent)}
 .table-tile-cap{font-size:11px;color:var(--text3);margin-top:2px}
 .table-tile-status{font-size:10px;margin-top:4px;font-weight:600}
 .table-tile.busy .table-tile-status{color:#f59e0b}
 .table-tile:not(.busy) .table-tile-status{color:var(--success)}
-/* Menu in waiter mode */
+
+/* Menu */
 #menu-screen{padding:16px}
-.w-search{
-  width:100%;padding:11px 16px;background:var(--dark3);border:1px solid var(--border);
-  border-radius:50px;color:var(--text);font-size:14px;outline:none;margin-bottom:14px;
-}
-.w-cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;margin-bottom:16px}
+.w-search{width:100%;padding:11px 16px;background:var(--dark3);border:1px solid var(--border);border-radius:50px;color:var(--text);font-size:14px;outline:none;margin-bottom:14px}
+.w-search::placeholder{color:var(--text3)}
+.w-cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;margin-bottom:14px}
 .w-cats::-webkit-scrollbar{display:none}
-.w-cat{
-  padding:7px 16px;border-radius:50px;background:var(--dark3);border:1px solid var(--border);
-  color:var(--text2);font-size:13px;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .2s;
-}
+.w-cat{padding:7px 16px;border-radius:50px;background:var(--dark3);border:1px solid var(--border);color:var(--text2);font-size:13px;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .2s}
 .w-cat.active{background:var(--accent);border-color:var(--accent);color:#fff}
 .w-items{display:flex;flex-direction:column;gap:8px;padding-bottom:120px}
-.w-item{
-  display:flex;align-items:center;gap:12px;padding:12px 14px;
-  background:var(--dark2);border:1px solid var(--border);border-radius:14px;
-  transition:all .2s;
-}
+.w-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--dark2);border:1px solid var(--border);border-radius:14px;transition:all .2s}
 .w-item-img{width:56px;height:48px;border-radius:8px;object-fit:cover;background:var(--dark3);flex-shrink:0}
-.w-item-name{font-size:15px;font-weight:600;margin-bottom:2px}
-.w-item-price{font-size:13px;color:var(--accent);font-weight:700}
+.w-item-en{font-size:14px;font-weight:600;margin-bottom:1px}
+.w-item-ar{font-size:12px;color:var(--text2);direction:rtl}
+.w-item-price{font-size:13px;color:var(--accent);font-weight:700;margin-top:2px}
 .w-item-actions{margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0}
-.w-qty-btn{
-  width:30px;height:30px;border-radius:50%;background:var(--dark3);border:1px solid var(--border);
-  color:var(--text);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:all .15s;
-}
+.w-qty-btn{width:30px;height:30px;border-radius:50%;background:var(--dark3);border:1px solid var(--border);color:var(--text);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
 .w-qty-btn:hover{border-color:var(--accent);color:var(--accent)}
 .w-qty-num{font-size:16px;font-weight:800;min-width:20px;text-align:center}
-.w-add-btn{
-  width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;
-  font-size:20px;cursor:pointer;border:none;display:flex;align-items:center;justify-content:center;
-  transition:all .2s;
-}
+.w-add-btn{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-size:20px;cursor:pointer;border:none;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .w-add-btn:hover{transform:scale(1.1)}
+
 /* Cart bar */
-#cart-bar{
-  position:fixed;bottom:0;left:0;right:0;
-  background:var(--dark2);border-top:1px solid var(--border);padding:12px 16px;
-  display:flex;align-items:center;gap:12px;
-}
+#cart-bar{position:fixed;bottom:0;left:0;right:0;background:var(--dark2);border-top:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:12px}
 .cart-bar-info{flex:1}
 .cart-bar-items{font-size:13px;color:var(--text2)}
 .cart-bar-total{font-size:18px;font-weight:800;color:var(--accent)}
-.cart-bar-btn{
-  padding:12px 24px;border-radius:50px;background:var(--accent);color:#fff;
-  font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .2s;
-}
+.cart-bar-btn{padding:12px 24px;border-radius:50px;background:var(--accent);color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .2s}
 .cart-bar-btn:hover{opacity:.88}
-/* Order confirm modal */
-.modal-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;
-  display:flex;align-items:flex-end;justify-content:center;padding:0;
-}
-.modal{
-  background:var(--dark2);border-radius:24px 24px 0 0;padding:28px 20px 32px;
-  width:100%;max-width:480px;max-height:85vh;overflow-y:auto;
-  animation:slideUp .3s cubic-bezier(0.4,0,0.2,1);
-}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:flex;align-items:flex-end;justify-content:center}
+.modal{background:var(--dark2);border-radius:24px 24px 0 0;padding:28px 20px 32px;width:100%;max-width:500px;max-height:85vh;overflow-y:auto;animation:slideUp .3s cubic-bezier(0.4,0,0.2,1)}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 .modal h3{font-size:18px;font-weight:800;margin-bottom:16px}
 .modal-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}
@@ -135,27 +90,28 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--dark);color:var(-
 .form-label{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;display:block;margin-top:14px}
 .form-control{width:100%;padding:11px 14px;background:var(--dark3);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;outline:none}
 .form-control:focus{border-color:var(--accent)}
-.modal-actions{display:flex;gap:10px;margin-top:20px}
+.form-control::placeholder{color:var(--text3)}
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:13px 22px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;border:none;transition:all .2s}
 .btn-primary{background:var(--accent);color:#fff;flex:1}
 .btn-ghost{background:var(--dark3);color:var(--text);border:1px solid var(--border)}
+
 /* Toast */
-#toast-root{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:999;display:flex;flex-direction:column;gap:8px}
-.toast{padding:10px 20px;border-radius:50px;font-size:13px;font-weight:600;animation:toastIn .3s ease;backdrop-filter:blur(16px)}
-@keyframes toastIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.toast-success{background:rgba(34,197,94,.9);color:#fff}
-.toast-error{background:rgba(239,68,68,.9);color:#fff}
-.toast-info{background:rgba(255,107,53,.9);color:#fff}
+#toast-root{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{padding:10px 20px;border-radius:50px;font-size:13px;font-weight:600;animation:toastIn .3s ease;white-space:nowrap}
+@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.toast-success{background:rgba(34,197,94,.92);color:#fff}
+.toast-error{background:rgba(239,68,68,.92);color:#fff}
+.toast-info{background:rgba(255,107,53,.92);color:#fff}
 </style>
 </head>
 <body>
 
-<!-- PIN Screen -->
+<!-- PIN -->
 <div id="pin-screen">
   <div class="pin-card">
     <h2>Flavor<span>House</span></h2>
-    <p>Waiter Mode — Enter PIN</p>
-    <div class="pin-display" id="pinDisplay">_</div>
+    <p>Waiter Mode · Enter PIN</p>
+    <div class="pin-display" id="pinDisplay">· · · ·</div>
     <div class="pin-grid">
       <button class="pin-btn" onclick="pinPress('1')">1</button>
       <button class="pin-btn" onclick="pinPress('2')">2</button>
@@ -166,41 +122,38 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--dark);color:var(-
       <button class="pin-btn" onclick="pinPress('7')">7</button>
       <button class="pin-btn" onclick="pinPress('8')">8</button>
       <button class="pin-btn" onclick="pinPress('9')">9</button>
-      <button class="pin-btn" onclick="pinClear()" style="font-size:16px">CLR</button>
+      <button class="pin-btn" onclick="pinClear()" style="font-size:15px;color:var(--text2)">CLR</button>
       <button class="pin-btn" onclick="pinPress('0')">0</button>
-      <button class="pin-btn" onclick="pinSubmit()" style="background:var(--accent);color:#fff">→</button>
+      <button class="pin-btn" onclick="pinSubmit()" style="background:var(--accent);color:#fff;border-color:var(--accent)">→</button>
     </div>
-    <div class="pin-err" id="pinErr">Incorrect PIN. Try again.</div>
-    <div style="font-size:11px;color:var(--text3);margin-top:8px">Default PIN: 1234</div>
+    <div class="pin-err" id="pinErr">Incorrect PIN — try again</div>
+    <div style="font-size:11px;color:var(--text3);margin-top:10px">Default PIN: 1234</div>
   </div>
 </div>
 
 <!-- App -->
 <div id="waiter-app" class="hidden">
   <header id="waiter-header">
-    <div class="waiter-logo">Flavor<span>House</span> <span style="font-size:12px;color:var(--text3);font-weight:400">Waiter</span></div>
+    <div class="waiter-logo">Flavor<span>House</span> <span style="font-size:11px;color:var(--text3);font-weight:400">Waiter</span></div>
     <div id="activeTableBadge" class="active-table-badge hidden">Table —</div>
-    <button onclick="changeTable()" style="padding:6px 14px;border-radius:50px;background:var(--dark3);border:1px solid var(--border);color:var(--text2);font-size:12px;cursor:pointer">Change Table</button>
+    <button onclick="changeTable()" style="padding:6px 14px;border-radius:50px;background:var(--dark3);border:1px solid var(--border);color:var(--text2);font-size:12px;cursor:pointer;flex-shrink:0">Change Table</button>
   </header>
 
-  <!-- Table Select -->
   <div id="table-select-screen">
     <h3>Select a table to order for</h3>
     <div class="table-grid" id="tableGrid">
-      <div style="color:var(--text3);padding:20px">Loading tables...</div>
+      <div style="color:var(--text3);padding:20px;font-size:13px">Loading tables…</div>
     </div>
-    <h3>Active orders</h3>
-    <div id="activeOrdersList" style="display:flex;flex-direction:column;gap:8px;margin-top:10px"></div>
+    <h3>Active orders right now</h3>
+    <div id="activeOrdersList" style="display:flex;flex-direction:column;gap:8px;margin-top:10px;padding-bottom:20px"></div>
   </div>
 
-  <!-- Menu Screen -->
   <div id="menu-screen" class="hidden">
-    <input class="w-search" id="wSearch" placeholder="Search dishes..." oninput="wFilterMenu()">
+    <input class="w-search" id="wSearch" placeholder="Search dishes…" oninput="wFilterMenu()">
     <div class="w-cats" id="wCatBar"></div>
     <div class="w-items" id="wMenuItems"></div>
   </div>
 
-  <!-- Cart bar -->
   <div id="cart-bar" class="hidden">
     <div class="cart-bar-info">
       <div class="cart-bar-items" id="cartBarItems">0 items</div>
@@ -210,96 +163,95 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--dark);color:var(-
   </div>
 </div>
 
-<!-- Modal root -->
 <div id="modal-root"></div>
 <div id="toast-root"></div>
 
+<!-- db.js MUST be loaded first so firebase is initialized -->
 <script src="db.js"></script>
 <script>
 'use strict';
 
 const WAITER_PIN = '1234';
-const W = {
-  tables: [],
-  menu: [],
-  categories: [],
-  cart: [],
-  activeTable: null,
-  activeCategory: null,
-  search: '',
-  settings: {},
-};
+const W = { tables:[], menu:[], categories:[], cart:[], activeTable:null, activeCat:null, search:'', settings:{} };
 
-// ── PIN ────────────────────────────────────────────
+/* ── PIN ── */
 let pinVal = '';
 function pinPress(d) {
   if (pinVal.length >= 4) return;
   pinVal += d;
-  document.getElementById('pinDisplay').textContent = '●'.repeat(pinVal.length) || '_';
+  document.getElementById('pinDisplay').textContent = '●'.repeat(pinVal.length).padEnd(4,'·').split('').join(' ');
+  if (pinVal.length === 4) setTimeout(pinSubmit, 120);
 }
-function pinClear() { pinVal = ''; document.getElementById('pinDisplay').textContent = '_'; }
+function pinClear() { pinVal=''; document.getElementById('pinDisplay').textContent='· · · ·'; }
 function pinSubmit() {
   if (pinVal === WAITER_PIN) {
-    document.getElementById('pin-screen').style.display = 'none';
+    document.getElementById('pin-screen').style.display='none';
     document.getElementById('waiter-app').classList.remove('hidden');
     initWaiter();
   } else {
-    document.getElementById('pinErr').style.display = 'block';
-    pinVal = '';
-    document.getElementById('pinDisplay').textContent = '_';
-    setTimeout(() => document.getElementById('pinErr').style.display = 'none', 2000);
+    document.getElementById('pinErr').style.display='block';
+    pinVal=''; document.getElementById('pinDisplay').textContent='· · · ·';
+    setTimeout(()=>document.getElementById('pinErr').style.display='none', 2200);
   }
 }
 
-// ── Init ───────────────────────────────────────────
+/* ── Init — called AFTER firebase is ready via db.js ── */
 async function initWaiter() {
   try {
     const [tables, menu, cats, settings] = await Promise.all([
       DB.getTables(), DB.getMenuItems(), DB.getCategories(), DB.getSettings()
     ]);
-    W.tables = tables;
-    W.menu = menu;
-    W.categories = cats.filter(c => c.name !== 'All');
+    W.tables   = tables;
+    W.menu     = menu;
+    W.categories = cats.filter(c=>c.name!=='All');
     W.settings = settings;
     renderTableSelect();
-  } catch(e) { toast('Failed to load data', 'error'); }
+  } catch(e) {
+    console.error('initWaiter error:', e);
+    toast('Failed to load data: ' + (e.message||'unknown'), 'error', 4000);
+  }
 }
 
-// ── Table Select ───────────────────────────────────
+/* ── Table Select ── */
 async function renderTableSelect() {
   const grid = document.getElementById('tableGrid');
-  const orders = await DB.getOrders(100);
-  const activeByTable = {};
-  orders.forEach(o => {
-    if (['pending','confirmed','preparing','ready'].includes(o.status)) {
-      if (!activeByTable[o.table_number]) activeByTable[o.table_number] = [];
-      activeByTable[o.table_number].push(o);
+  try {
+    const orders = await DB.getOrders(100);
+    const activeByTable = {};
+    orders.forEach(o => {
+      if (['pending','confirmed','preparing','ready'].includes(o.status)) {
+        if (!activeByTable[o.table_number]) activeByTable[o.table_number] = [];
+        activeByTable[o.table_number].push(o);
+      }
+    });
+    if (!W.tables.length) {
+      grid.innerHTML = '<div style="color:var(--text3);font-size:13px;padding:10px">No tables found. Add tables in admin first.</div>';
+    } else {
+      grid.innerHTML = W.tables.map(t => {
+        const busy = !!activeByTable[t.table_number];
+        return `<div class="table-tile ${busy?'busy':''}" onclick="selectTable(${t.table_number})">
+          <div class="table-tile-num">${t.table_number}</div>
+          <div class="table-tile-cap">${t.capacity||4} seats</div>
+          <div class="table-tile-status">${busy?'● Busy':'● Free'}</div>
+        </div>`;
+      }).join('');
     }
-  });
-
-  grid.innerHTML = W.tables.map(t => {
-    const busy = !!activeByTable[t.table_number];
-    return `<div class="table-tile ${busy ? 'busy' : ''}" onclick="selectTable(${t.table_number})">
-      <div class="table-tile-num">${t.table_number}</div>
-      <div class="table-tile-cap">${t.capacity || 4} seats</div>
-      <div class="table-tile-status">${busy ? '● Busy' : '● Free'}</div>
-    </div>`;
-  }).join('');
-
-  const activeEl = document.getElementById('activeOrdersList');
-  const allActive = orders.filter(o => ['pending','confirmed','preparing','ready'].includes(o.status));
-  activeEl.innerHTML = allActive.length ? allActive.slice(0,8).map(o => `
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--dark2);border-radius:12px;border:1px solid var(--border);font-size:13px">
-      <span style="font-weight:700;color:var(--accent)">#${o.order_number}</span>
-      <span>Table ${o.table_number}</span>
-      <span style="color:var(--text2)">${o.items?.map(i=>i.name).join(', ').slice(0,30)}</span>
-      <span style="padding:3px 10px;border-radius:50px;background:rgba(245,158,11,.12);color:#f59e0b;font-size:11px">${o.status}</span>
-    </div>`).join('') : '<div style="color:var(--text3);font-size:13px;padding:10px">No active orders</div>';
+    const activeEl = document.getElementById('activeOrdersList');
+    const allActive = orders.filter(o=>['pending','confirmed','preparing','ready'].includes(o.status));
+    activeEl.innerHTML = allActive.length ? allActive.slice(0,8).map(o=>`
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--dark2);border-radius:12px;border:1px solid var(--border);font-size:13px">
+        <span style="font-weight:700;color:var(--accent)">#${o.order_number}</span>
+        <span>Table ${o.table_number}</span>
+        <span style="color:var(--text2)">${(o.items||[]).map(i=>i.name).join(', ').slice(0,28)}</span>
+        <span style="padding:3px 10px;border-radius:50px;background:rgba(245,158,11,.12);color:#f59e0b;font-size:11px">${o.status}</span>
+      </div>`).join('') : '<div style="color:var(--text3);font-size:13px;padding:10px">No active orders</div>';
+  } catch(e) {
+    grid.innerHTML = `<div style="color:var(--danger);font-size:13px;padding:10px">Error: ${e.message}</div>`;
+  }
 }
 
 function selectTable(num) {
-  W.activeTable = num;
-  W.cart = [];
+  W.activeTable = num; W.cart = [];
   document.getElementById('activeTableBadge').textContent = `Table ${num}`;
   document.getElementById('activeTableBadge').classList.remove('hidden');
   document.getElementById('table-select-screen').classList.add('hidden');
@@ -308,8 +260,7 @@ function selectTable(num) {
 }
 
 function changeTable() {
-  W.activeTable = null;
-  W.cart = [];
+  W.activeTable=null; W.cart=[];
   document.getElementById('activeTableBadge').classList.add('hidden');
   document.getElementById('table-select-screen').classList.remove('hidden');
   document.getElementById('menu-screen').classList.add('hidden');
@@ -317,29 +268,27 @@ function changeTable() {
   renderTableSelect();
 }
 
-// ── Menu ───────────────────────────────────────────
+/* ── Menu ── */
 function renderWaiterMenu() {
   const bar = document.getElementById('wCatBar');
-  bar.innerHTML = `<button class="w-cat ${!W.activeCategory ? 'active' : ''}" onclick="wSetCat(null)">✨ All</button>` +
-    W.categories.map(c => `<button class="w-cat ${W.activeCategory === c.id ? 'active' : ''}" onclick="wSetCat('${c.id}')">${c.icon} ${c.name}</button>`).join('');
+  bar.innerHTML = `<button class="w-cat ${!W.activeCat?'active':''}" onclick="wSetCat(null)">✨ All</button>` +
+    W.categories.map(c=>`<button class="w-cat ${W.activeCat===c.id?'active':''}" onclick="wSetCat('${c.id}')">${c.icon} ${c.name}</button>`).join('');
   wRenderItems();
 }
-
-function wSetCat(id) { W.activeCategory = id; renderWaiterMenu(); }
-function wFilterMenu() { W.search = document.getElementById('wSearch').value.toLowerCase(); wRenderItems(); }
-
+function wSetCat(id) { W.activeCat=id; renderWaiterMenu(); }
+function wFilterMenu() { W.search=document.getElementById('wSearch').value.toLowerCase(); wRenderItems(); }
 function wRenderItems() {
   const el = document.getElementById('wMenuItems');
-  let items = W.menu.filter(i => i.available);
-  if (W.activeCategory) items = items.filter(i => i.category_id === W.activeCategory);
-  if (W.search) items = items.filter(i => i.name.toLowerCase().includes(W.search) || i.name_ar?.includes(W.search));
-
+  let items = W.menu.filter(i=>i.available);
+  if (W.activeCat) items = items.filter(i=>i.category_id===W.activeCat);
+  if (W.search) items = items.filter(i=>i.name.toLowerCase().includes(W.search)||i.name_ar?.includes(W.search));
   el.innerHTML = items.map(item => {
-    const inCart = W.cart.find(c => c.id === item.id);
+    const inCart = W.cart.find(c=>c.id===item.id);
     return `<div class="w-item">
       <img class="w-item-img" src="${item.image_url}" onerror="this.src='https://via.placeholder.com/56x48/1a1a1a/444'" loading="lazy">
-      <div>
-        <div class="w-item-name">${item.name}</div>
+      <div style="flex:1;min-width:0">
+        <div class="w-item-en">${item.name}</div>
+        ${item.name_ar?`<div class="w-item-ar">${item.name_ar}</div>`:''}
         <div class="w-item-price">ج.م ${Math.round(item.price).toLocaleString()}</div>
       </div>
       <div class="w-item-actions">
@@ -354,97 +303,88 @@ function wRenderItems() {
 }
 
 function wAddItem(id) {
-  const item = W.menu.find(i => i.id === id);
+  const item = W.menu.find(i=>i.id===id);
   if (!item) return;
-  const ex = W.cart.find(c => c.id === id);
-  if (ex) ex.qty++; else W.cart.push({...item, qty:1});
+  const ex = W.cart.find(c=>c.id===id);
+  if (ex) ex.qty++; else W.cart.push({...item,qty:1});
   updateCartBar(); wRenderItems();
-  toast(item.name + ' added', 'success');
+  toast(item.name+' added','success');
 }
-
-function wChangeQty(id, delta) {
-  const idx = W.cart.findIndex(c => c.id === id);
-  if (idx === -1) return;
+function wChangeQty(id,delta) {
+  const idx = W.cart.findIndex(c=>c.id===id);
+  if (idx===-1) return;
   W.cart[idx].qty += delta;
-  if (W.cart[idx].qty <= 0) W.cart.splice(idx, 1);
+  if (W.cart[idx].qty<=0) W.cart.splice(idx,1);
   updateCartBar(); wRenderItems();
 }
-
 function updateCartBar() {
   const bar = document.getElementById('cart-bar');
-  const total = W.cart.reduce((a,i) => a + i.price * i.qty, 0);
-  const qty = W.cart.reduce((a,i) => a + i.qty, 0);
+  const total = W.cart.reduce((a,i)=>a+i.price*i.qty,0);
+  const qty   = W.cart.reduce((a,i)=>a+i.qty,0);
   if (!W.cart.length) { bar.classList.add('hidden'); return; }
   bar.classList.remove('hidden');
-  document.getElementById('cartBarItems').textContent = `${qty} item${qty !== 1 ? 's' : ''}`;
+  document.getElementById('cartBarItems').textContent = `${qty} item${qty!==1?'s':''}`;
   document.getElementById('cartBarTotal').textContent = `ج.م ${Math.round(total).toLocaleString()}`;
 }
 
-// ── Order Modal ────────────────────────────────────
+/* ── Order Modal ── */
 function openOrderModal() {
-  const total = W.cart.reduce((a,i) => a + i.price * i.qty, 0);
+  const total = W.cart.reduce((a,i)=>a+i.price*i.qty,0);
   document.getElementById('modal-root').innerHTML = `
   <div class="modal-overlay" onclick="if(event.target===this)closeModal()">
     <div class="modal">
       <h3>Order for Table ${W.activeTable}</h3>
-      ${W.cart.map(i => `<div class="modal-item">
-        <span>${i.name} ×${i.qty}</span>
-        <span style="color:var(--accent);font-weight:700">ج.م ${Math.round(i.price * i.qty).toLocaleString()}</span>
+      ${W.cart.map(i=>`<div class="modal-item">
+        <span>${i.name}${i.name_ar?` / ${i.name_ar}`:''} ×${i.qty}</span>
+        <span style="color:var(--accent);font-weight:700">ج.م ${Math.round(i.price*i.qty).toLocaleString()}</span>
       </div>`).join('')}
       <div class="modal-total"><span>Total</span><span>ج.م ${Math.round(total).toLocaleString()}</span></div>
       <label class="form-label">Customer Name (optional)</label>
       <input class="form-control" id="wName" placeholder="e.g. Ahmed">
       <label class="form-label">Notes for kitchen</label>
-      <textarea class="form-control" id="wNotes" rows="2" placeholder="No onions, extra sauce..."></textarea>
+      <textarea class="form-control" id="wNotes" rows="2" placeholder="No onions, extra sauce…"></textarea>
       <label class="form-label">Payment method</label>
       <select class="form-control" id="wPayment">
         <option value="cash">💵 Cash on Arrival</option>
         <option value="card">💳 Card on Arrival</option>
         <option value="instapay">📲 InstaPay</option>
       </select>
-      <div class="modal-actions">
+      <div style="display:flex;gap:10px;margin-top:20px">
         <button class="btn btn-primary" onclick="submitWaiterOrder()">✓ Place Order</button>
         <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
       </div>
     </div>
   </div>`;
 }
-
-function closeModal() { document.getElementById('modal-root').innerHTML = ''; }
+function closeModal() { document.getElementById('modal-root').innerHTML=''; }
 
 async function submitWaiterOrder() {
-  const total = W.cart.reduce((a,i) => a + i.price * i.qty, 0);
+  const total = W.cart.reduce((a,i)=>a+i.price*i.qty,0);
   try {
     await DB.insertOrder({
       table_number: W.activeTable,
-      items: W.cart.map(i => ({id:i.id,name:i.name,name_ar:i.name_ar,price:i.price,qty:i.qty,subtotal:i.price*i.qty})),
+      items: W.cart.map(i=>({id:i.id,name:i.name,name_ar:i.name_ar||'',price:i.price,qty:i.qty,subtotal:i.price*i.qty})),
       total: parseFloat(total.toFixed(2)),
       status: 'pending',
       payment_method: document.getElementById('wPayment').value,
-      customer_name: document.getElementById('wName').value.trim() || null,
-      notes: document.getElementById('wNotes').value.trim() || null,
+      customer_name: document.getElementById('wName').value.trim()||null,
+      notes: document.getElementById('wNotes').value.trim()||null,
       placed_by: 'waiter',
     });
-    closeModal();
-    W.cart = [];
-    updateCartBar();
-    wRenderItems();
-    toast('Order placed successfully!', 'success');
-    setTimeout(() => changeTable(), 1500);
-  } catch(e) { toast('Failed: ' + e.message, 'error'); }
+    closeModal(); W.cart=[]; updateCartBar(); wRenderItems();
+    toast('Order placed successfully!','success');
+    setTimeout(()=>changeTable(), 1800);
+  } catch(e) { toast('Failed: '+(e.message||'unknown'),'error'); }
 }
 
-// ── Toast ──────────────────────────────────────────
-function toast(msg, type='info', dur=2500) {
-  const root = document.getElementById('toast-root');
-  const el = document.createElement('div');
-  el.className = `toast toast-${type}`;
-  el.textContent = msg;
+/* ── Toast ── */
+function toast(msg,type='info',dur=2500) {
+  const root=document.getElementById('toast-root');
+  const el=document.createElement('div');
+  el.className=`toast toast-${type}`;el.textContent=msg;
   root.appendChild(el);
-  setTimeout(() => { el.style.opacity='0'; el.style.transition='opacity .3s'; setTimeout(()=>el.remove(),300); }, dur);
+  setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity .3s';setTimeout(()=>el.remove(),300);},dur);
 }
-
-document.addEventListener('DOMContentLoaded', () => {});
 </script>
 </body>
 </html>

@@ -170,11 +170,54 @@ async function init() {
 
 function applySettings() {
   const s = App.settings;
-  if (s.accent_color) document.documentElement.style.setProperty('--accent', s.accent_color);
   const el = id => document.getElementById(id);
+
+  // ── Accent color ──
+  if (s.accent_color) document.documentElement.style.setProperty('--accent', s.accent_color);
+
+  // ── Background / theme ──
+  if (s.bg_color) document.documentElement.style.setProperty('--dark', s.bg_color);
+
+  // ── Card border radius ──
+  if (s.card_radius) {
+    document.documentElement.style.setProperty('--radius', s.card_radius);
+    document.documentElement.style.setProperty('--radius2', `calc(${s.card_radius} + 8px)`);
+  }
+
+  // ── Hero font ──
+  if (s.hero_font) {
+    document.querySelectorAll('.hero-title, .nav-logo, .footer-logo, .section-title').forEach(e => {
+      e.style.fontFamily = `'${s.hero_font}', serif`;
+    });
+  }
+
+  // ── WiFi ──
   if (el('wifiName')) el('wifiName').textContent = s.wifi_name || 'FH_Guest';
   if (el('wifiPass')) el('wifiPass').textContent = s.wifi_pass || 'flavorhouse2024';
+
+  // ── Footer tagline ──
   if (el('footerTagline')) el('footerTagline').textContent = s.tagline || t('footer');
+
+  // ── Hero text ──
+  if (el('heroTitle1') && s.hero_title1) el('heroTitle1').textContent = s.hero_title1;
+  if (el('heroTitle2') && s.hero_title2) el('heroTitle2').textContent = s.hero_title2;
+  if (el('heroSubtitle') && s.hero_subtitle) el('heroSubtitle').textContent = s.hero_subtitle;
+
+  // ── Hero stats ──
+  if (el('heroStat1Num')   && s.stat1_num)   el('heroStat1Num').textContent   = s.stat1_num;
+  if (el('heroStat1Label') && s.stat1_label) el('heroStat1Label').textContent = s.stat1_label;
+  if (el('heroStat2Num')   && s.stat2_num)   el('heroStat2Num').textContent   = s.stat2_num;
+  if (el('heroStat2Label') && s.stat2_label) el('heroStat2Label').textContent = s.stat2_label;
+  if (el('heroStat3Num')   && s.stat3_num)   el('heroStat3Num').textContent   = s.stat3_num;
+  if (el('heroStat3Label') && s.stat3_label) el('heroStat3Label').textContent = s.stat3_label;
+
+  // ── Menu section labels ──
+  if (el('menuLabel') && s.menu_section_label) el('menuLabel').textContent = isAr() ? (s.menu_section_label_ar || s.menu_section_label) : s.menu_section_label;
+  if (el('menuTitle') && s.menu_section_title) el('menuTitle').textContent = s.menu_section_title;
+
+  // ── Restaurant name in nav + footer ──
+  const rName = s.restaurant_name || 'Flavor House';
+  document.querySelectorAll('.nav-logo span.brand-name, .footer-logo span.brand-name').forEach(e => e.textContent = rName);
 }
 
 function simulateNFC() { App.tableNumber = 5; showTableBanner(5); }
